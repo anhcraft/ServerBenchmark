@@ -2,6 +2,7 @@ package dev.anhcraft.serverbenchmark;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ public class Command extends BaseCommand {
 
     @Subcommand("entity start")
     @Description("Starts an entity benchmark")
+    @CommandPermission("tron.tron.vn")
     public void entityStart(Player p, EntityType type, int amount, int seconds, int threshold) {
         Location loc = p.getLocation();
         serverBenchmark.scheduler = new BukkitRunnable() {
@@ -30,7 +32,7 @@ public class Command extends BaseCommand {
                     Entity e = loc.getWorld().spawnEntity(loc, type);
                     e.setInvulnerable(true);
                 }
-                p.sendMessage(String.format("Total: %s entities; TPS: %.2f; Avg tick: %.2f", loc.getWorld().getEntityCount(), Bukkit.getTPS()[0], Bukkit.getAverageTickTime()));
+                p.sendMessage(String.format("Total: %s entities; TPS: %.2f", loc.getWorld().getEntityCount(), Bukkit.getTPS()[0]));
                 if (Bukkit.getTPS()[0] < threshold) {
                     p.sendMessage("TPS too low, stopping benchmark");
                     entityEnd(p);
@@ -41,6 +43,7 @@ public class Command extends BaseCommand {
 
     @Subcommand("entity end")
     @Description("Ends the entity benchmark")
+    @CommandPermission("tron.tron.vn")
     public void entityEnd(Player p) {
         if (serverBenchmark.scheduler == null) {
             p.sendMessage("No entity benchmark running");
