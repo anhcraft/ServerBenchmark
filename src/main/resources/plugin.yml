@@ -1,4 +1,3 @@
 name: ServerBenchmark
 version: '${project.version}'
 main: dev.anhcraft.serverbenchmark.ServerBenchmark
-api-version: '1.12'
